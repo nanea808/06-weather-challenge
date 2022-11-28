@@ -31,7 +31,7 @@ $(() => {
             .then(function (data) {
                 console.log(data);
                 for (var x = 0; x < 5; x++) {
-                    setWeatherData()
+                    // setweather()
                 }
             });
     }
