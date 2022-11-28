@@ -11,34 +11,43 @@ $(() => {
 
         if (El.attr('id') === 'current-weather') {
             El.children().eq(0).text(weather.name + ' ' + dayjs(weather.dt * 1000).format('MM/DD/YYYY'));
+            El.children().eq(1).attr('src', iconUrl);
+            El.children().eq(2).text('Temp: ' + weather.main.temp + '°F');
+            El.children().eq(3).text('Wind: ' + weather.wind.speed + ' MPH');
+            El.children().eq(4).text('Humidity: ' + weather.main.humidity + ' %');
         } else {
             El.children().eq(0).text(dayjs(weather.dt * 1000).format('MM/DD/YYYY'));
         }
-
-        El.children().eq(1).attr('src', iconUrl);
-        El.children().eq(2).text('Temp: ' + weather.main.temp + '°F');
-        El.children().eq(3).text('Wind: ' + weather.wind.speed + ' MPH');
-        El.children().eq(4).text('Humidity: ' + weather.main.humidity + ' %');
     }
 
     function averageData(list) {
         console.log(list);
-        var averages = {
-            temp: 0,
-            wind: 0,
-            humidity: 0
-        }
+        var start = 0;
+        var end = 8;
 
-        for (var x = 0; x < 8; x++) {
-            averages.temp += list[x].main.temp;
-            averages.wind += list[x].wind.speed;
-            averages.humidity += list[x].main.humidity;
-        }
+        for (var i = 0; i < 5; i++) {
+            var averages = {
+                temp: 0,
+                wind: 0,
+                humidity: 0,
+                date: null
+            }
 
-        averages.temp = averages.temp / 8;
-        averages.wind = averages.wind / 8;
-        averages.humidity = averages.humidity / 8;
-        console.log(averages);
+            for (var x = start; x < end; x++) {
+                averages.temp += list[x].main.temp;
+                averages.wind += list[x].wind.speed;
+                averages.humidity += list[x].main.humidity;
+            }
+            
+
+            averages.temp = averages.temp / 8;
+            averages.wind = averages.wind / 8;
+            averages.humidity = averages.humidity / 8;
+            averages.date = list[start].dt;
+            console.log(averages);
+            start += 8;
+            end += 8;
+        }
     }
 
     function getWeatherData5Day(lat, lon) {
