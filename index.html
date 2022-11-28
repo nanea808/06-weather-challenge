@@ -12,6 +12,7 @@
         src="https://code.jquery.com/jquery-3.6.1.js"
         integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" 
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </head>
 
@@ -42,14 +43,15 @@
             </div>
 
             <div class="p-3 col-9">
-                <div class="p-3 border border-dark mb-3">
-                    <h1>City Date Symbol</h1>
-                    <p>Temp</p>
-                    <p>Wind</p>
-                    <p>Humidity</p>
+                <div class="p-3 border border-dark mb-3" id="current-weather">
+                    <h1></h1>
+                    <img src="" alt="">
+                    <p></p>
+                    <p></p>
+                    <p></p>
                 </div>
 
-                <div>
+                <div id="5-day">
                     <h2 class="mb-3">5-Day Forecast:</h2>
                     <div class="container-fluid row">
                         <div class="border border-dark bg-dark text-white col-2 ps-3 me-3">
