@@ -21,8 +21,28 @@ $(() => {
         El.children().eq(4).text('Humidity: ' + weather.main.humidity + ' %');
     }
 
+    function averageData(list) {
+        console.log(list);
+        var averages = {
+            temp: 0,
+            wind: 0,
+            humidity: 0
+        }
+
+        for (var x = 0; x < 8; x++) {
+            averages.temp += list[x].main.temp;
+            averages.wind += list[x].wind.speed;
+            averages.humidity += list[x].main.humidity;
+        }
+
+        averages.temp = averages.temp / 8;
+        averages.wind = averages.wind / 8;
+        averages.humidity = averages.humidity / 8;
+        console.log(averages);
+    }
+
     function getWeatherData5Day(lat, lon) {
-        var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=a6e98ccb06f33151ebb17a9d35aa5234';
+        var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=' + lat + '&lon=' + lon + '&appid=a6e98ccb06f33151ebb17a9d35aa5234';
 
         fetch(requestUrl)
             .then(function (response) {
@@ -30,9 +50,10 @@ $(() => {
             })
             .then(function (data) {
                 console.log(data);
-                for (var x = 0; x < 5; x++) {
-                    // setweather()
-                }
+                averageData(data.list);
+                // for (var x = 0; x < 5; x++) {
+                //     // setweather()
+                // }
             });
     }
 
