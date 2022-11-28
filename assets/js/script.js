@@ -10,9 +10,9 @@ $(() => {
         var iconUrl = "http://openweathermap.org/img/w/" + weather.weather[0].icon + ".png";
 
         if (El.attr('id') === 'current-weather') {
-            El.children().eq(0).text(weather.name + ' ' + dayjs().format('MM/DD/YYYY'));
+            El.children().eq(0).text(weather.name + ' ' + dayjs(weather.dt * 1000).format('MM/DD/YYYY'));
         } else {
-            El.children().eq(0).text()
+            El.children().eq(0).text(dayjs(weather.dt * 1000).format('MM/DD/YYYY'));
         }
 
         El.children().eq(1).attr('src', iconUrl);
@@ -22,7 +22,7 @@ $(() => {
     }
 
     function getWeatherData5Day(lat, lon) {
-        var requestUrl = 'api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=a6e98ccb06f33151ebb17a9d35aa5234';
+        var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=a6e98ccb06f33151ebb17a9d35aa5234';
 
         fetch(requestUrl)
             .then(function (response) {
@@ -30,6 +30,9 @@ $(() => {
             })
             .then(function (data) {
                 console.log(data);
+                for (var x = 0; x < 5; x++) {
+                    setWeatherData()
+                }
             });
     }
 
