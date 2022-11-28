@@ -17,7 +17,7 @@
     <main>
         <div class="container-fluid row">
             <div class="p-3 col-3">
-                <form>
+                <form class="mb-3">
                     <label for="DataList" class="form-label">Search for a city: </label>
                     <input class="form-control" list="datalistOptions" id="DataList" placeholder="Type to search...">
                     <datalist id="datalistOptions">
@@ -29,16 +29,56 @@
                     </datalist>
                     <button type="button" class="btn btn-primary mt-3 w-100">Search</button>
                 </form>
+                <hr class="border-top border-dark">
+                <div>
+                    <button class="btn btn-secondary text-black w-100 mb-3">Previous Searches</button>
+                    <button class="btn btn-secondary text-black w-100 mb-3">Previous Searches</button>
+                </div>
             </div>
 
             <div class="p-3 col-9">
-                <div class="p-3 border border-dark">
-                    <h1>City Date</h1>
+                <div class="p-3 border border-dark mb-3">
+                    <h1>City Date Symbol</h1>
                     <p>Temp</p>
                     <p>Wind</p>
                     <p>Humidity</p>
                 </div>
 
+                <div>
+                    <h2 class="mb-3">5-Day Forecast:</h2>
+                    <div class="container-fluid row">
+                        <div class="border border-dark bg-dark text-white col-2 ps-3 me-3">
+                            <h3>Date Symbol</h3>
+                            <p>Temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div class="border border-dark bg-dark text-white col-2 ps-3 me-3">
+                            <h3>Date Symbol</h3>
+                            <p>Temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div class="border border-dark bg-dark text-white col-2 ps-3 me-3">
+                            <h3>Date Symbol</h3>
+                            <p>Temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div class="border border-dark bg-dark text-white col-2 ps-3 me-3">
+                            <h3>Date Symbol</h3>
+                            <p>Temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div class="border border-dark bg-dark text-white col-2 ps-3 me-3">
+                            <h3>Date Symbol</h3>
+                            <p>Temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
