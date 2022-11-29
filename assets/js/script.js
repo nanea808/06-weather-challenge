@@ -7,8 +7,6 @@ $(() => {
     console.log(fiveDayEl);
 
     function setWeatherData(weather, El) {
-        
-
         if (El.attr('id') === 'current-weather') {
             var iconUrl = "https://openweathermap.org/img/w/" + weather.weather[0].icon + ".png";
             El.children().eq(0).text(weather.name + ' ' + dayjs(weather.dt * 1000).format('MM/DD/YYYY'));
