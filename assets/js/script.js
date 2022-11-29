@@ -10,7 +10,7 @@ $(() => {
         
 
         if (El.attr('id') === 'current-weather') {
-            var iconUrl = "http://openweathermap.org/img/w/" + weather.weather[0].icon + ".png";
+            var iconUrl = "https://openweathermap.org/img/w/" + weather.weather[0].icon + ".png";
             El.children().eq(0).text(weather.name + ' ' + dayjs(weather.dt * 1000).format('MM/DD/YYYY'));
             El.children().eq(1).attr('src', iconUrl);
             El.children().eq(2).text('Temp: ' + weather.main.temp + '°F');
@@ -88,7 +88,7 @@ $(() => {
     }
 
     function getGeoData(city) {
-        var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=a6e98ccb06f33151ebb17a9d35aa5234';
+        var requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=a6e98ccb06f33151ebb17a9d35aa5234';
         fetch(requestUrl)
             .then(function (response) {
                 return response.json();
