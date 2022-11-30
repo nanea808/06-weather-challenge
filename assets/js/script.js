@@ -6,7 +6,6 @@ $(() => {
     var savedSearches = $('#previous-searches');
 
     var cityButtonLimit = 5;
-    var dataCheck = true;
 
     console.log(fiveDayEl);
 
@@ -20,10 +19,12 @@ $(() => {
             El.children().eq(4).text('Humidity: ' + weather.main.humidity + ' %');
 
         } else {
+            var iconUrl = "https://openweathermap.org/img/w/" + weather.icon + ".png";
             El.children().eq(0).text(dayjs(weather.date * 1000).format('MM/DD/YYYY'));
-            El.children().eq(1).text('Temp: ' + weather.temp + '°F');
-            El.children().eq(2).text('Wind: ' + weather.wind + ' MPH');
-            El.children().eq(3).text('Humidity: ' + weather.humidity + ' %');
+            El.children().eq(1).attr('src', iconUrl);
+            El.children().eq(2).text('Temp: ' + weather.temp + '°F');
+            El.children().eq(3).text('Wind: ' + weather.wind + ' MPH');
+            El.children().eq(4).text('Humidity: ' + weather.humidity + ' %');
         }
     }
 
@@ -38,7 +39,8 @@ $(() => {
                 temp: 0,
                 wind: 0,
                 humidity: 0,
-                date: null
+                date: null,
+                icon: null
             }
 
             for (var x = start; x < end; x++) {
@@ -52,12 +54,14 @@ $(() => {
             average.wind = Math.round(average.wind / 8);
             average.humidity = Math.round(average.humidity / 8);
             average.date = list[start].dt;
+            average.icon = list[end - 4].weather[0].icon;
 
             fiveDayAverages[i] = average;
 
             start += 8;
             end += 8;
         }
+        console.log(fiveDayAverages);
 
         return fiveDayAverages;
     }
@@ -106,23 +110,27 @@ $(() => {
                 }
 
                 // Checks to prevent duplicates
+                var duplicate = false;
                 for (var x = 0; x < savedSearches.children().length; x++) {
                     if (savedSearches.children().eq(x).text() === city) {
-                        return;
+                        duplicate = true;
                     }
                 }
 
                 // Creates a new element based off user searches
-                var searchButton = $('<button>');
-                searchButton.attr('class', 'btn btn-secondary text-black w-100 mb-3');
-                searchButton.text(city);
-                savedSearches.append(searchButton);
+                if (!duplicate) {
+                    var searchButton = $('<button>');
+                    searchButton.attr('class', 'btn btn-secondary text-black w-100 mb-3');
+                    searchButton.text(city);
+                    savedSearches.append(searchButton);
 
-                // Limits number of elements
-                if (savedSearches.children().length > cityButtonLimit) {
-                    savedSearches.children().eq(0).remove();
+                    // Limits number of elements
+                    if (savedSearches.children().length > cityButtonLimit) {
+                        savedSearches.children().eq(0).remove();
+                    }
                 }
 
+                // Passes latitude and longitude data into the weather api functions
                 getWeatherData(data[0].lat, data[0].lon);
                 getWeatherData5Day(data[0].lat, data[0].lon);
             });
