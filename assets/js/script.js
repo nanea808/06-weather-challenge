@@ -97,6 +97,11 @@ $(() => {
             })
             .then(function (data) {
                 console.log(data);
+                // Checks 
+                if (data.length === 0) {
+                    currentWeatherEl.children().eq(0).text('Not a valid city name!');
+                    return;
+                }
                 getWeatherData(data[0].lat, data[0].lon);
                 getWeatherData5Day(data[0].lat, data[0].lon);
             });
@@ -105,9 +110,14 @@ $(() => {
     searchButton.click(function (e) {
         e.preventDefault();
         var cityName = searchForm.children('input').val().trim();
+        // Checks for empty string
+        if (!cityName) {
+            return;
+        }
+
         // Submits entered city name to geocoding api function
         getGeoData(cityName);
-
+        
         // Checks to prevent duplicates
         for (var x = 0; x < savedSearches.children().length; x++) {
             if (savedSearches.children().eq(x).text() === cityName) {
