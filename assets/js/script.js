@@ -6,7 +6,6 @@ $(() => {
     var savedSearches = $('#previous-searches');
 
     var cityButtonLimit = 5;
-    var dataCheck = true;
 
     console.log(fiveDayEl);
 
@@ -123,6 +122,7 @@ $(() => {
                     savedSearches.children().eq(0).remove();
                 }
 
+                // Passes latitude and longitude data into the weather api functions
                 getWeatherData(data[0].lat, data[0].lon);
                 getWeatherData5Day(data[0].lat, data[0].lon);
             });
