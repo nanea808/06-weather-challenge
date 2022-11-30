@@ -3,6 +3,9 @@ $(() => {
     var searchForm = $('#search-form');
     var currentWeatherEl = $('#current-weather');
     var fiveDayEl = $('#5-day').children().eq(1);
+    var savedSearches = $('#previous-searches');
+
+    var cityButtonLimit = 5;
 
     console.log(fiveDayEl);
 
@@ -14,6 +17,7 @@ $(() => {
             El.children().eq(2).text('Temp: ' + weather.main.temp + '°F');
             El.children().eq(3).text('Wind: ' + weather.wind.speed + ' MPH');
             El.children().eq(4).text('Humidity: ' + weather.main.humidity + ' %');
+
         } else {
             El.children().eq(0).text(dayjs(weather.date * 1000).format('MM/DD/YYYY'));
             El.children().eq(1).text('Temp: ' + weather.temp + '°F');
@@ -24,7 +28,7 @@ $(() => {
 
     function averageData(list) {
         console.log(list);
-        var fiveDayAverages= []
+        var fiveDayAverages = []
         var start = 0;
         var end = 8;
 
@@ -41,19 +45,19 @@ $(() => {
                 average.wind += list[x].wind.speed;
                 average.humidity += list[x].main.humidity;
             }
-            
+
 
             average.temp = Math.round(average.temp / 8);
             average.wind = Math.round(average.wind / 8);
             average.humidity = Math.round(average.humidity / 8);
             average.date = list[start].dt;
-            
+
             fiveDayAverages[i] = average;
 
             start += 8;
             end += 8;
         }
-        
+
         return fiveDayAverages;
     }
 
@@ -101,7 +105,60 @@ $(() => {
     searchButton.click(function (e) {
         e.preventDefault();
         var cityName = searchForm.children('input').val().trim();
-        console.log(cityName);
+        // Submits entered city name to geocoding api function
         getGeoData(cityName);
+
+        // Checks to prevent duplicates
+        for (var x = 0; x < savedSearches.children().length; x++) {
+            if (savedSearches.children().eq(x).text() === cityName) {
+                return;
+            }
+        }
+
+        // Creates a new element based off user searches
+        var searchButton = $('<button>');
+        searchButton.attr('class', 'btn btn-secondary text-black w-100 mb-3');
+        searchButton.text(cityName);
+        savedSearches.append(searchButton);
+
+        // Limits number of elements
+        if (savedSearches.children().length > cityButtonLimit) {
+            savedSearches.children().eq(0).remove();
+        }
     });
+
+    searchForm.submit(function (e) {
+        e.preventDefault();
+        var cityName = searchForm.children('input').val().trim();
+        // Submits entered city name to geocoding api function
+        getGeoData(cityName);
+
+        // Checks to prevent duplicates
+        for (var x = 0; x < savedSearches.children().length; x++) {
+            if (savedSearches.children().eq(x).text() === cityName) {
+                return;
+            }
+        }
+
+        // Creates a new element based off user searches
+        var searchButton = $('<button>');
+        searchButton.attr('class', 'btn btn-secondary text-black w-100 mb-3');
+        searchButton.text(cityName);
+        savedSearches.append(searchButton);
+
+        // Limits number of elements
+        if (savedSearches.children().length > cityButtonLimit) {
+            savedSearches.children().eq(0).remove();
+        }
+    });
+
+    savedSearches.click(function (e) {
+        e.preventDefault();
+        var element = e.target;
+
+        if (element.matches("button")) {
+            var cityName = element.textContent;
+            getGeoData(cityName);
+        }
+    })
 });
