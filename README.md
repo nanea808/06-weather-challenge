@@ -8,6 +8,8 @@ This is a website that displays weather data on the users desired city.
 
 This is the website layout:
 
+![site-image](./assets/images/site-image.png)
+
 ## Link
 
 [nanea808.github.io/06-weather-challenge/](https://nanea808.github.io/06-weather-challenge/)
